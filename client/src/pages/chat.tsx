@@ -1,17 +1,24 @@
 import { useEffect, useState } from 'react';
 import socket from '@/utils/socket';
+import { ChatMessage } from '@/types';
 import ChatWindow from '@/components/ChatWindow';
 
 export default function ChatPage() {
-  const [msgs, setMsgs] = useState<any[]>([]);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
 
   useEffect(() => {
-    socket.on('message:receive', m => setMsgs(p => [...p, m]));
+    socket.on('message:receive', (msg: ChatMessage) =>
+      setMessages(prev => [...prev, msg])
+    );
+
     fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/chat/history`)
-      .then(r => r.json())
-      .then(data => setMsgs(data));
-    return () => { socket.off('message:receive'); };
+      .then(res => res.json())
+      .then((data: ChatMessage[]) => setMessages(data));
+
+    return () => {
+      socket.off('message:receive');
+    };
   }, []);
 
-  return <ChatWindow messages={msgs} />;
+  return <ChatWindow messages={messages} />;
 }
