@@ -1,4 +1,5 @@
 import { ChatMessage } from '@/types';
+import Image from 'next/image';
 
 interface MessageListProps {
   messages: ChatMessage[];
@@ -18,11 +19,13 @@ export default function MessageList({ messages }: MessageListProps) {
               </span>
             </p>
             {msg.isImage ? (
-              <img
+              <Image
                 src={msg.text}
                 alt="Uploaded content"
                 className="mt-1 rounded-lg"
-                style={{ maxHeight: '200px', maxWidth: '100%' }}
+                width={200}
+                height={200}
+                style={{ maxHeight: '200px', width: 'auto' }}
               />
             ) : (
               <p className="text-sm text-gray-300">{msg.text}</p>
