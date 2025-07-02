@@ -7,7 +7,7 @@ interface MessageListProps {
 export default function MessageList({ messages }: MessageListProps) {
   return (
     <div className="space-y-4">
-      {messages.map((msg, index) => (
+      {messages.map((msg, _index) => (
         <div key={msg._id || msg.timestamp} className="flex items-start hover:bg-gray-600 p-2 rounded">
           <div className="flex-shrink-0 w-10 h-10 bg-gray-500 rounded-full"></div>
           <div className="ml-4">
