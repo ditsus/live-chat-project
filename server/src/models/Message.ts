@@ -1,15 +1,12 @@
-import { Schema, model } from 'mongoose';
+import mongoose from 'mongoose';
 
-interface IMessage {
-  author: string;
-  text: string;
-  timestamp: Date;
-}
-
-const MessageSchema = new Schema<IMessage>({
+const messageSchema = new mongoose.Schema({
   author: { type: String, required: true },
   text: { type: String, required: true },
-  timestamp: { type: Date, default: Date.now }
+  timestamp: { type: Date, default: Date.now },
+  isImage: { type: Boolean, default: false },
 });
 
-export default model<IMessage>('Message', MessageSchema);
+const Message = mongoose.model('Message', messageSchema);
+
+export default Message;

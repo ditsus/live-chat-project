@@ -1,9 +1,15 @@
-interface UserListProps { users: string[]; }
+interface UserListProps {
+  users: string[];
+}
 
 export default function UserList({ users }: UserListProps) {
   return (
-    <ul style={{ listStyle: 'none', padding: 0, marginBottom: '1rem' }}>
-      {users.map(u => <li key={u}>{u}</li>)}
+    <ul className="space-y-2">
+      {users.map((u) => (
+        <li key={u} className="p-2 text-gray-300 hover:bg-gray-700 rounded">
+          # {u}
+        </li>
+      ))}
     </ul>
   );
 }
