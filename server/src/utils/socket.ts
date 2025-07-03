@@ -13,12 +13,18 @@ export default function setupSocket(io: Server) {
           author: data.author,
           text: data.text,
           isImage: data.isImage || false,
+          timestamp: new Date(),
         });
         await msg.save();
 
-      // Broadcast to all clients
-      io.emit('message:receive', msg);
-    });
+        // Broadcast to all clients with timestamp as ISO string
+        const serialized = {
+          ...msg.toObject(),
+          timestamp: msg.timestamp instanceof Date ? msg.timestamp.toISOString() : msg.timestamp,
+        };
+        io.emit('message:receive', serialized);
+      }
+    );
 
     socket.on('disconnect', () => {
       console.log('User disconnected:', socket.id);
