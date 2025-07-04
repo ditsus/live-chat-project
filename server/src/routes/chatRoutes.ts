@@ -10,3 +10,5 @@ router.get('/history', getHistory);
 router.post('/message', postMessage);
 
 export default router;
+
+
